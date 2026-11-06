@@ -1,79 +1,338 @@
 /*
- * MIDNIGHT VIOLET — Discord CSS Theme
- * Version: 1.0
+ * Midnight Violet — Discord / Vencord Theme
+ * Version: 2.0.0
  *
- * Palette: near-black, deep violet, electric purple and soft pink.
- * Intended for a Discord client/theme loader that supports custom CSS.
+ * A conservative, readability-first rewrite.
+ * Install as a local Vencord theme CSS file.
  *
- * IMPORTANT:
- * Discord's normal desktop/web client does not provide a built-in way to
- * load custom CSS. A compatible theme loader/client modification is required.
- * Discord's internal class names can change, so some selectors may need updates.
+ * Notes:
+ * - Uses Discord's theme variables for the main color system.
+ * - Avoids broad selectors that previously recolored unrelated elements.
+ * - Discord updates may rename internal classes; theme compatibility can vary.
  */
 
-:root {
+/* --------------------------------------------------------------------------
+   1. COLOR TOKENS
+   -------------------------------------------------------------------------- */
+
+:root,
+.theme-dark {
   color-scheme: dark;
 
-  --mv-bg: #0b0812;
-  --mv-bg-deep: #08060d;
-  --mv-panel: #100b1a;
-  --mv-panel-2: #171024;
-  --mv-panel-3: #211633;
-  --mv-hover: #281a3d;
-  --mv-active: #35204f;
+  --mv-bg: #100b18;
+  --mv-bg-deep: #0b0811;
+  --mv-panel: #151020;
+  --mv-panel-alt: #1b1428;
+  --mv-panel-hover: #241a34;
+  --mv-panel-active: #302044;
 
-  --mv-purple: #a855f7;
-  --mv-purple-bright: #c084fc;
-  --mv-purple-soft: #8b5cf6;
-  --mv-pink: #ec4899;
-  --mv-pink-soft: #f472b6;
+  --mv-purple: #a970f5;
+  --mv-purple-bright: #c49aff;
+  --mv-purple-deep: #8145cf;
+  --mv-pink: #e58acb;
 
-  --mv-text: #f4edff;
-  --mv-text-muted: #b6a9c9;
-  --mv-text-faint: #827493;
-  --mv-border: rgba(192, 132, 252, 0.16);
-  --mv-border-strong: rgba(192, 132, 252, 0.32);
-  --mv-glow: 0 0 18px rgba(168, 85, 247, 0.18);
+  --mv-text: #f4effb;
+  --mv-text-muted: #c2b7d2;
+  --mv-text-subtle: #988aa9;
+  --mv-border: rgba(196, 154, 255, 0.15);
+  --mv-border-strong: rgba(196, 154, 255, 0.28);
 
+  /* Discord / Vencord semantic variables */
   --background-primary: var(--mv-bg);
   --background-secondary: var(--mv-panel);
-  --background-secondary-alt: var(--mv-panel-2);
+  --background-secondary-alt: var(--mv-panel-alt);
   --background-tertiary: var(--mv-bg-deep);
-  --background-floating: #160f22;
-  --background-accent: var(--mv-active);
-  --background-modifier-hover: rgba(168, 85, 247, 0.12);
-  --background-modifier-active: rgba(168, 85, 247, 0.2);
-  --background-modifier-selected: rgba(168, 85, 247, 0.17);
+  --background-accent: var(--mv-panel-active);
+  --background-floating: #1b1428;
+
+  --background-modifier-hover: rgba(169, 112, 245, 0.10);
+  --background-modifier-active: rgba(169, 112, 245, 0.16);
+  --background-modifier-selected: rgba(169, 112, 245, 0.14);
   --background-modifier-accent: var(--mv-border);
 
   --text-normal: var(--mv-text);
   --text-muted: var(--mv-text-muted);
   --text-link: var(--mv-purple-bright);
-  --header-primary: #fff7ff;
+  --header-primary: #fffaff;
   --header-secondary: var(--mv-text-muted);
 
-  --brand-experiment: var(--mv-purple);
-  --brand-experiment-560: #9333ea;
-  --brand-experiment-600: #7e22ce;
-  --brand-experiment-100: #f3e8ff;
-  --button-danger-background: #be185d;
-  --button-danger-background-hover: #9d174d;
+  --interactive-normal: #c7bbd8;
+  --interactive-hover: #f0e7fb;
+  --interactive-active: #ffffff;
+  --interactive-muted: #776b87;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --brand-experiment: var(--mv-purple);
+  --brand-experiment-560: #9658df;
+  --brand-experiment-600: #8145cf;
+  --brand-experiment-100: #f4eaff;
+
+  --mention-background: rgba(169, 112, 245, 0.16);
+  --mention-foreground: var(--mv-purple-bright);
+
+  --input-background: #1b1428;
+  --input-placeholder-text: #988aa9;
+
+  --scrollbar-thin-thumb: #60417f;
+  --scrollbar-thin-track: transparent;
+  --scrollbar-auto-thumb: #60417f;
+  --scrollbar-auto-track: transparent;
+  --scrollbar-auto-scrollbar-color-thumb: #60417f;
+  --scrollbar-auto-scrollbar-color-track: transparent;
+
+  --mv-radius: 10px;
 }
 
-/* Base */
-html,
+/* --------------------------------------------------------------------------
+   2. PAGE BACKGROUNDS
+   -------------------------------------------------------------------------- */
+
 body,
 #app-mount {
-  background: var(--mv-bg) !important;
+  background: var(--mv-bg-deep);
   color: var(--mv-text);
 }
 
+/* Keep Discord's own layout backgrounds intact; only tint known surfaces. */
+[class*="app_"],
+[class*="base_"] {
+  color: var(--mv-text);
+}
+
+/* Server rail and channel sidebar */
+[class*="guilds_"] {
+  background: var(--mv-bg-deep) !important;
+  border-right: 1px solid var(--mv-border);
+}
+
+[class*="sidebar_"] {
+  background: var(--mv-panel) !important;
+  border-right: 1px solid var(--mv-border);
+}
+
+/* Main chat and member list */
+[class*="chat_"],
+[class*="chatContent_"],
+[class*="membersWrap_"],
+[class*="members_"] {
+  background: var(--mv-bg) !important;
+}
+
+[class*="container_"][class*="themed_"] {
+  background: var(--mv-panel) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. TEXT AND ICON CONTRAST
+   -------------------------------------------------------------------------- */
+
+[class*="title_"],
+[class*="name_"],
+[class*="username_"],
+[class*="header_"] {
+  color: var(--mv-text);
+}
+
+[class*="subtitle_"],
+[class*="topic_"],
+[class*="timestamp_"],
+[class*="placeholder_"] {
+  color: var(--mv-text-muted);
+}
+
+/* Do not globally recolor SVGs: Discord uses icon colors to indicate state. */
+a,
+[class*="anchor_"] {
+  color: var(--mv-purple-bright);
+}
+
+a:hover,
+[class*="anchor_"]:hover {
+  color: var(--mv-pink);
+}
+
+/* --------------------------------------------------------------------------
+   4. CHANNELS AND SERVER LIST
+   -------------------------------------------------------------------------- */
+
+[class*="containerDefault_"] [class*="icon_"],
+[class*="containerDefault_"] [class*="name_"] {
+  color: var(--mv-text-muted);
+}
+
+[class*="modeSelected_"] {
+  background: rgba(169, 112, 245, 0.16) !important;
+  border-radius: 8px;
+}
+
+[class*="modeSelected_"] [class*="name_"],
+[class*="modeSelected_"] [class*="icon_"] {
+  color: var(--mv-purple-bright) !important;
+}
+
+[class*="containerDefault_"]:hover [class*="name_"],
+[class*="containerDefault_"]:hover [class*="icon_"] {
+  color: var(--mv-text) !important;
+}
+
+[class*="guilds_"] [class*="pill_"] [class*="item_"] {
+  background: var(--mv-purple-bright) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. CHAT MESSAGES
+   -------------------------------------------------------------------------- */
+
+[class*="message_"] {
+  border-radius: 8px;
+}
+
+[class*="message_"]:hover {
+  background: rgba(169, 112, 245, 0.045) !important;
+}
+
+[class*="mentioned_"] {
+  background: rgba(229, 138, 203, 0.10) !important;
+  border-left: 3px solid var(--mv-pink);
+}
+
+[class*="replying_"] {
+  background: rgba(169, 112, 245, 0.08) !important;
+}
+
+[class*="messageContent_"] {
+  color: var(--mv-text);
+}
+
+/* Mentions remain readable in messages and member lists. */
+[class*="mention_"] {
+  color: var(--mv-purple-bright) !important;
+  background: rgba(169, 112, 245, 0.17) !important;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   6. MESSAGE COMPOSER
+   -------------------------------------------------------------------------- */
+
+[class*="channelTextArea_"],
+[class*="scrollableContainer_"] {
+  background: var(--mv-panel-alt) !important;
+  border: 1px solid var(--mv-border);
+  border-radius: 12px !important;
+}
+
+[class*="channelTextArea_"]:focus-within,
+[class*="scrollableContainer_"]:focus-within {
+  border-color: var(--mv-purple) !important;
+  box-shadow: 0 0 0 2px rgba(169, 112, 245, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   7. BUTTONS — preserve semantic colors for danger/success states
+   -------------------------------------------------------------------------- */
+
+[class*="lookFilled_"][class*="colorBrand_"] {
+  background: var(--mv-purple-deep) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+}
+
+[class*="lookFilled_"][class*="colorBrand_"]:hover {
+  background: #9658df !important;
+}
+
+[class*="lookOutlined_"][class*="colorBrand_"] {
+  border-color: var(--mv-border-strong) !important;
+  color: var(--mv-purple-bright) !important;
+  border-radius: 8px !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. POPOUTS, MENUS AND MODALS
+   -------------------------------------------------------------------------- */
+
+[class*="menu_"],
+[class*="popout_"],
+[class*="messagesPopoutWrap_"],
+[class*=" modal_"],
+[class*="modal_"] {
+  background: #1b1428 !important;
+  border: 1px solid var(--mv-border);
+  border-radius: 12px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+[class*="menu_"] [class*="item_"]:hover,
+[class*="menu_"] [class*="focused_"] {
+  background: rgba(169, 112, 245, 0.16) !important;
+  color: var(--mv-text) !important;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   9. SEARCH, INPUTS AND SETTINGS
+   -------------------------------------------------------------------------- */
+
+input,
+textarea,
+[class*="input_"],
+[class*="searchBar_"] {
+  color: var(--mv-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--mv-text-subtle);
+}
+
+[class*="searchBar_"] {
+  background: var(--mv-panel-alt) !important;
+  border: 1px solid var(--mv-border);
+  border-radius: 9px !important;
+}
+
+[class*="searchBar_"]:focus-within {
+  border-color: var(--mv-purple) !important;
+}
+
+/* Settings navigation and selected tabs */
+[class*="side_"] [class*="item_"][class*="selected_"],
+[class*="tabBar_"] [class*="item_"][class*="selected_"] {
+  color: var(--mv-purple-bright) !important;
+  background: rgba(169, 112, 245, 0.12);
+  border-radius: 7px;
+}
+
+/* --------------------------------------------------------------------------
+   10. REACTIONS, UNREAD MARKERS AND DIVIDERS
+   -------------------------------------------------------------------------- */
+
+[class*="reaction_"] {
+  background: rgba(169, 112, 245, 0.08) !important;
+  border: 1px solid var(--mv-border);
+  border-radius: 7px !important;
+}
+
+[class*="reaction_"][class*="reactionMe_"] {
+  background: rgba(169, 112, 245, 0.20) !important;
+  border-color: var(--mv-purple) !important;
+}
+
+[class*="divider_"] {
+  border-color: var(--mv-border) !important;
+}
+
+[class*="unreadPill_"] {
+  background: var(--mv-purple-deep) !important;
+  color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. SCROLLBARS
+   -------------------------------------------------------------------------- */
+
 * {
-  scrollbar-color: #573477 transparent;
+  scrollbar-color: #60417f transparent;
   scrollbar-width: thin;
 }
 
@@ -87,300 +346,35 @@ body,
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--mv-purple), #61318e);
+  background: #60417f;
   border: 2px solid transparent;
   border-radius: 20px;
   background-clip: padding-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--mv-pink), var(--mv-purple));
+  background: #8b5ac0;
   background-clip: padding-box;
 }
 
-/* Main application surfaces */
-[class*="appMount"],
-[class*="app_"],
-[class*="bg_"],
-[class*="layers_"],
-[class*="layer_"] {
-  background-color: var(--mv-bg) !important;
+/* --------------------------------------------------------------------------
+   12. SUBTLE INTERACTIONS
+   -------------------------------------------------------------------------- */
+
+[class*="containerDefault_"],
+[class*="reaction_"],
+[class*="lookFilled_"][class*="colorBrand_"] {
+  transition: background-color 140ms ease, border-color 140ms ease;
 }
 
-[class*="sidebar_"],
-[class*="privateChannels_"],
-[class*="panels_"],
-[class*="container_"][class*="chat_"] {
-  background: var(--mv-panel) !important;
-}
-
-[class*="guilds_"] {
-  background: var(--mv-bg-deep) !important;
-  border-right: 1px solid var(--mv-border);
-}
-
-[class*="guilds_"] [class*="wrapper_"] {
-  background: transparent !important;
-}
-
-/* Server icons */
-[class*="guilds_"] [class*="listItem_"] [class*="wrapper_"] {
-  transition: transform 180ms ease, filter 180ms ease;
-}
-
-[class*="guilds_"] [class*="listItem_"] [class*="wrapper_"]:hover {
-  transform: translateY(-2px) scale(1.04);
-  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.35));
-}
-
-[class*="guilds_"] [class*="pill_"] [class*="item_"] {
-  background: linear-gradient(180deg, var(--mv-purple-bright), var(--mv-pink)) !important;
-  border-radius: 0 8px 8px 0;
-}
-
-/* Channel list */
-[class*="sidebar_"] [class*="containerDefault_"] [class*="name_"],
-[class*="sidebar_"] [class*="channelName_"] {
-  color: var(--mv-text-muted);
-  transition: color 160ms ease;
-}
-
-[class*="sidebar_"] [class*="modeSelected_"],
-[class*="sidebar_"] [class*="wrapper_"][class*="modeSelected_"] {
-  background: linear-gradient(90deg, rgba(168, 85, 247, 0.24), rgba(236, 72, 153, 0.08)) !important;
-  border-left: 3px solid var(--mv-purple-bright);
-  border-radius: 0 9px 9px 0;
-}
-
-[class*="sidebar_"] [class*="clickable_"]:hover {
-  background: rgba(168, 85, 247, 0.12) !important;
-  border-radius: 9px;
-}
-
-[class*="sidebar_"] [class*="modeSelected_"] [class*="name_"],
-[class*="sidebar_"] [class*="modeSelected_"] [class*="icon_"] {
-  color: var(--mv-purple-bright) !important;
-}
-
-/* Chat header and message area */
-[class*="title_"],
-[class*="chatContent_"],
-[class*="messagesWrapper_"],
-[class*="scroller_"][class*="auto_"] {
-  background-color: var(--mv-bg) !important;
-}
-
-[class*="title_"] {
-  border-bottom: 1px solid var(--mv-border);
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14);
-}
-
-[class*="message_"] {
-  margin: 2px 8px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 10px;
-  transition: background-color 140ms ease;
-}
-
-[class*="message_"]:hover {
-  background: rgba(168, 85, 247, 0.055) !important;
-}
-
-[class*="mentioned_"] {
-  background: linear-gradient(90deg, rgba(236, 72, 153, 0.13), rgba(168, 85, 247, 0.08)) !important;
-  border-left: 3px solid var(--mv-pink);
-}
-
-[class*="replying_"] {
-  background: rgba(168, 85, 247, 0.08) !important;
-}
-
-[class*="username_"] {
-  color: var(--mv-purple-bright);
-}
-
-[class*="timestamp_"] {
-  color: var(--mv-text-faint) !important;
-}
-
-/* Composer / message input */
-[class*="form_"] [class*="channelTextArea_"],
-[class*="channelTextArea_"],
-[class*="scrollableContainer_"] {
-  background: var(--mv-panel-2) !important;
-  border: 1px solid var(--mv-border);
-  border-radius: var(--radius-lg) !important;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-}
-
-[class*="channelTextArea_"]:focus-within,
-[class*="scrollableContainer_"]:focus-within {
-  border-color: var(--mv-purple) !important;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.12), var(--mv-glow);
-}
-
-/* Buttons */
-button,
-[class*="button_"],
-[class*="lookFilled_"] {
-  transition: background-color 160ms ease, border-color 160ms ease,
-              transform 160ms ease, box-shadow 160ms ease;
-}
-
-[class*="lookFilled_"][class*="colorBrand_"],
-button[class*="colorBrand_"] {
-  background: linear-gradient(135deg, #9333ea, #c026d3) !important;
-  border: 1px solid rgba(216, 180, 254, 0.22);
-  color: white !important;
-  border-radius: 9px !important;
-}
-
-[class*="lookFilled_"][class*="colorBrand_"]:hover,
-button[class*="colorBrand_"]:hover {
-  background: linear-gradient(135deg, #a855f7, #db2777) !important;
-  box-shadow: 0 0 16px rgba(168, 85, 247, 0.28);
-  transform: translateY(-1px);
-}
-
-[class*="lookOutlined_"] {
-  border-color: var(--mv-border-strong) !important;
-  border-radius: 9px !important;
-}
-
-[class*="lookOutlined_"]:hover {
-  border-color: var(--mv-purple-bright) !important;
-  background: rgba(168, 85, 247, 0.1) !important;
-}
-
-/* Members and user panels */
-[class*="members_"],
-[class*="member_"],
-[class*="container_"][class*="members"] {
-  background: var(--mv-panel) !important;
-}
-
-[class*="members_"] [class*="member_"]:hover {
-  background: rgba(168, 85, 247, 0.1) !important;
-  border-radius: 9px;
-}
-
-[class*="panels_"] {
-  border-top: 1px solid var(--mv-border);
-}
-
-/* Popouts, menus, dialogs and tooltips */
-[class*="menu_"],
-[class*="popout_"],
-[class*="modal_"],
-[class*="root_"][class*="modal"],
-[class*="tooltip_"] {
-  background: #160f22 !important;
-  border: 1px solid var(--mv-border-strong);
-  border-radius: var(--radius-lg) !important;
-  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.42), var(--mv-glow);
-}
-
-[class*="item_"][class*="focused_"],
-[class*="menu_"] [class*="item_"]:hover {
-  background: rgba(168, 85, 247, 0.17) !important;
-  color: #fff !important;
-  border-radius: 7px;
-}
-
-/* Search */
-[class*="searchBar_"],
-[class*="search_"][class*="container_"] {
-  background: var(--mv-panel-2) !important;
-  border: 1px solid var(--mv-border);
-  border-radius: 10px !important;
-}
-
-[class*="searchBar_"]:focus-within {
-  border-color: var(--mv-purple) !important;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.12);
-}
-
-/* Tabs, toggles and checkboxes */
-[class*="tabBar_"] [class*="item_"][class*="selected_"] {
-  color: var(--mv-purple-bright) !important;
-  border-bottom-color: var(--mv-purple-bright) !important;
-}
-
-[class*="checked_"],
-[class*="switch_"][class*="checked_"] {
-  background-color: var(--mv-purple) !important;
-}
-
-input,
-textarea {
-  accent-color: var(--mv-purple);
-}
-
-/* Links, mentions and reactions */
-a,
-[class*="anchor_"] {
-  color: var(--mv-purple-bright);
-}
-
-a:hover,
-[class*="anchor_"]:hover {
-  color: var(--mv-pink-soft);
-}
-
-[class*="mention_"] {
-  background: rgba(168, 85, 247, 0.17) !important;
-  color: var(--mv-purple-bright) !important;
-  border-radius: 5px;
-}
-
-[class*="reaction_"] {
-  background: rgba(168, 85, 247, 0.09) !important;
-  border: 1px solid var(--mv-border);
-  border-radius: 8px !important;
-}
-
-[class*="reaction_"][class*="reactionMe_"] {
-  background: rgba(168, 85, 247, 0.22) !important;
-  border-color: var(--mv-purple) !important;
-}
-
-/* Voice / video panels */
-[class*="voiceUser_"],
-[class*="voiceChannel_"] {
-  border-radius: 9px;
-}
-
-[class*="rtcConnectionStatus_"] {
-  color: var(--mv-purple-bright) !important;
-}
-
-/* Dividers and unread markers */
-[class*="divider_"] {
-  border-color: var(--mv-border) !important;
-}
-
-[class*="unreadPill_"],
-[class*="unread_"] [class*="content_"] {
-  background: linear-gradient(90deg, var(--mv-purple), var(--mv-pink)) !important;
-  color: white !important;
-  border-radius: 20px;
-}
-
-/* Selection */
-::selection {
-  color: white;
-  background: rgba(168, 85, 247, 0.55);
-}
-
-/* Reduced motion accessibility */
+/* Respect accessibility preferences. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
