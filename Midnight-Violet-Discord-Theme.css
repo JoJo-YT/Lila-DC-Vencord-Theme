@@ -1,86 +1,54 @@
 /**
- * @name Violet Horizon
- * @description Discord-Theme in Lila und Blau mit sanftem Farbverlauf
- * @version 1.0.0
+ * @name Violet Horizon (Safe)
+ * @description Lila/Blau-Verlauf, nur Variablen + Hintergrund (kein Layout-Eingriff)
+ * @version 1.1.0
  * @author du
- *
- * Funktioniert mit BetterDiscord, Vencord (Online-Theme / lokale Datei) und
- * jedem anderen Client-Mod, der eigenes CSS erlaubt.
  */
 
 :root {
-  /* Grundpalette */
-  --vh-purple-1: #1a0b2e;
-  --vh-purple-2: #2d1459;
-  --vh-purple-3: #4a1fa0;
-  --vh-violet:   #8b5cf6;
-  --vh-indigo:   #6366f1;
-  --vh-blue:     #3b82f6;
-  --vh-cyan:     #38bdf8;
-  --vh-navy-1:   #0b1030;
-  --vh-navy-2:   #101a4d;
-
-  /* Verläufe */
   --vh-gradient-bg: linear-gradient(135deg, #1a0b2e 0%, #2d1459 30%, #1b2a7a 70%, #0b1a4d 100%);
-  --vh-gradient-accent: linear-gradient(90deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
-  --vh-gradient-soft: linear-gradient(180deg, rgba(139, 92, 246, 0.14), rgba(59, 130, 246, 0.10));
-
-  /* Glas-Flächen */
-  --vh-glass-1: rgba(20, 12, 48, 0.55);
-  --vh-glass-2: rgba(16, 20, 60, 0.50);
-  --vh-glass-3: rgba(30, 20, 80, 0.65);
-  --vh-border:  rgba(139, 92, 246, 0.25);
+  --vh-gradient-accent: linear-gradient(90deg, #8b5cf6, #6366f1, #3b82f6);
 }
 
-/* ---------- Discord-Variablen überschreiben ---------- */
+/* Hintergrund: Verlauf hinter der ganzen App */
+body {
+  background: var(--vh-gradient-bg) !important;
+  background-attachment: fixed !important;
+}
+
+/* Discord-Farbvariablen (halbtransparent, damit der Verlauf durchscheint) */
 .theme-dark,
-.theme-light,
 .theme-darker,
 .theme-midnight {
-  /* Hintergründe (alt) */
-  --background-primary: rgba(18, 12, 44, 0.35);
-  --background-secondary: var(--vh-glass-1);
-  --background-secondary-alt: var(--vh-glass-2);
-  --background-tertiary: rgba(10, 8, 30, 0.55);
+  /* Hintergründe (ältere Discord-Versionen) */
+  --background-primary: rgba(18, 12, 44, 0.45);
+  --background-secondary: rgba(20, 12, 48, 0.55);
+  --background-secondary-alt: rgba(16, 20, 60, 0.55);
+  --background-tertiary: rgba(10, 8, 30, 0.60);
   --background-floating: #1b1245;
   --background-accent: rgba(139, 92, 246, 0.30);
   --background-modifier-hover: rgba(139, 92, 246, 0.12);
   --background-modifier-active: rgba(139, 92, 246, 0.20);
   --background-modifier-selected: rgba(99, 102, 241, 0.28);
   --background-modifier-accent: rgba(139, 92, 246, 0.18);
-  --background-mentioned: rgba(99, 102, 241, 0.15);
-  --background-mentioned-hover: rgba(99, 102, 241, 0.22);
-  --channeltextarea-background: rgba(10, 8, 34, 0.60);
+  --channeltextarea-background: rgba(10, 8, 34, 0.65);
 
-  /* Hintergründe (neu) */
-  --background-base-low: rgba(18, 12, 44, 0.45);
-  --background-base-lower: rgba(10, 8, 30, 0.55);
-  --background-base-lowest: rgba(8, 6, 26, 0.65);
-  --background-surface-high: rgba(30, 20, 80, 0.55);
-  --background-surface-higher: rgba(40, 26, 100, 0.60);
-  --background-surface-highest: rgba(50, 32, 120, 0.65);
-  --chat-background-default: rgba(18, 12, 44, 0.30);
-  --bg-overlay-1: rgba(18, 12, 44, 0.40);
-  --bg-overlay-2: rgba(16, 20, 60, 0.45);
-  --bg-overlay-3: rgba(10, 8, 30, 0.50);
-  --bg-overlay-chat: rgba(18, 12, 44, 0.25);
+  /* Hintergründe (neuere Discord-Versionen) */
+  --background-base-low: rgba(18, 12, 44, 0.50);
+  --background-base-lower: rgba(10, 8, 30, 0.60);
+  --background-base-lowest: rgba(8, 6, 26, 0.70);
+  --background-surface-high: rgba(30, 20, 80, 0.60);
+  --background-surface-higher: rgba(40, 26, 100, 0.65);
+  --background-surface-highest: rgba(50, 32, 120, 0.70);
+  --chat-background-default: rgba(18, 12, 44, 0.35);
 
   /* Akzentfarben */
   --brand-experiment: #8b5cf6;
-  --brand-experiment-560: #7c4df0;
   --brand-500: #8b5cf6;
   --brand-360: #a78bfa;
   --brand-400: #9a72f8;
   --brand-600: #6d3fe0;
-  --brand-630: #5b32c4;
-  --brand-experiment-05a: rgba(139, 92, 246, 0.05);
-  --brand-experiment-10a: rgba(139, 92, 246, 0.10);
-  --brand-experiment-15a: rgba(139, 92, 246, 0.15);
-  --brand-experiment-20a: rgba(139, 92, 246, 0.20);
-  --brand-experiment-30a: rgba(139, 92, 246, 0.30);
   --text-link: #7dd3fc;
-  --control-brand-foreground: #8b5cf6;
-  --control-brand-foreground-new: #8b5cf6;
 
   /* Text */
   --text-normal: #e6e1ff;
@@ -90,206 +58,16 @@
   --interactive-normal: #b9b1e6;
   --interactive-hover: #ffffff;
   --interactive-active: #ffffff;
-  --interactive-muted: #5a5190;
   --channels-default: #a79fd6;
-  --text-default: #e6e1ff;
 }
 
-/* ---------- Hintergrund mit Farbverlauf ---------- */
-body,
-#app-mount {
-  background:
-    radial-gradient(40% 40% at 20% 25%, rgba(139, 92, 246, 0.28), transparent 70%),
-    radial-gradient(45% 45% at 80% 75%, rgba(59, 130, 246, 0.26), transparent 70%),
-    radial-gradient(35% 35% at 60% 15%, rgba(99, 102, 241, 0.18), transparent 70%),
-    var(--vh-gradient-bg) !important;
-  background-attachment: fixed !important;
-}
-
-/* ---------- Server-Leiste, Kanalliste, Mitgliederliste ---------- */
-nav[class*="guilds_"],
-[class*="guilds_"] {
-  background: linear-gradient(180deg, rgba(26, 11, 46, 0.85), rgba(11, 16, 48, 0.85)) !important;
-}
-
-[class*="sidebar_"] {
-  background: linear-gradient(180deg, rgba(45, 20, 89, 0.45), rgba(16, 26, 77, 0.45)) !important;
-  border-right: 1px solid var(--vh-border);
-}
-
-[class*="membersWrap_"],
-[class*="members_"] {
-  background: linear-gradient(180deg, rgba(16, 26, 77, 0.40), rgba(45, 20, 89, 0.40)) !important;
-  border-left: 1px solid var(--vh-border);
-}
-
-/* Titelleiste / Chat-Header */
-section[class*="title_"] {
-  border-bottom: 1px solid var(--vh-border) !important;
-  box-shadow: 0 1px 0 rgba(99, 102, 241, 0.15), 0 8px 24px -12px rgba(139, 92, 246, 0.35) !important;
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.10), rgba(59, 130, 246, 0.08)) !important;
-}
-
-/* Panel unten links (Nutzerbereich) */
-section[class*="panels_"] > div,
-[class*="panels_"] {
-  background: linear-gradient(135deg, rgba(45, 20, 89, 0.70), rgba(16, 26, 77, 0.70)) !important;
-  border-top: 1px solid var(--vh-border);
-}
-
-/* ---------- Server-Icons ---------- */
-[class*="wrapper_"][class*="guild"] [class*="icon_"],
-[class*="listItem_"] [class*="wrapper_"] {
-  transition: border-radius 0.2s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-[class*="listItem_"]:hover [class*="wrapper_"] {
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.55);
-}
-
-/* Aktiv-Pille neben dem Server */
-[class*="listItem_"] [class*="pill_"] span {
-  background: var(--vh-gradient-accent) !important;
-}
-
-/* ---------- Kanäle ---------- */
-[class*="modeSelected_"],
-li[class*="selected_"] > div {
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.30), rgba(59, 130, 246, 0.18)) !important;
-  border-radius: 6px;
-  box-shadow: inset 3px 0 0 #8b5cf6;
-}
-
-[class*="modeUnread_"]::before {
-  background: var(--vh-cyan) !important;
-}
-
-/* ---------- Nachrichten ---------- */
-[class*="messageListItem_"] [class*="message_"]:hover {
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.07), rgba(59, 130, 246, 0.04)) !important;
-}
-
-[class*="mentioned_"] {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.18), rgba(59, 130, 246, 0.08)) !important;
-  box-shadow: inset 3px 0 0 #6366f1;
-}
-
-[class*="mentioned_"]:hover {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.25), rgba(59, 130, 246, 0.12)) !important;
-}
-
-/* Neue-Nachrichten-Trennlinie */
-[class*="isUnread_"] [class*="unreadPill"],
-[class*="divider_"][class*="isUnread"] {
-  border-color: #8b5cf6 !important;
-}
-
-/* ---------- Eingabefeld ---------- */
-[class*="channelTextArea_"] {
-  background: rgba(10, 8, 34, 0.65) !important;
-  border: 1px solid var(--vh-border);
-  border-radius: 12px;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-[class*="channelTextArea_"]:focus-within {
-  border-color: rgba(139, 92, 246, 0.7);
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.4), 0 0 24px -4px rgba(99, 102, 241, 0.55);
-}
-
-/* ---------- Buttons ---------- */
-[class*="colorBrand_"],
-button[class*="lookFilled_"][class*="colorBrand_"] {
-  background: var(--vh-gradient-accent) !important;
-  border: none !important;
-  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-}
-
-[class*="colorBrand_"]:hover {
-  filter: brightness(1.12);
-  box-shadow: 0 6px 18px -6px rgba(99, 102, 241, 0.7);
-}
-
-[class*="colorBrand_"]:active {
-  transform: translateY(1px);
-}
-
-/* ---------- Scrollbars ---------- */
-::-webkit-scrollbar-thumb,
-[class*="thin_"]::-webkit-scrollbar-thumb {
+/* Scrollbars mit Verlauf */
+::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #8b5cf6, #3b82f6) !important;
-  border: 2px solid transparent !important;
-  background-clip: padding-box !important;
   border-radius: 8px;
 }
 
-::-webkit-scrollbar-track,
-[class*="thin_"]::-webkit-scrollbar-track {
-  background: rgba(10, 8, 30, 0.35) !important;
-  border: none !important;
-}
-
-/* ---------- Popouts, Menüs, Modals ---------- */
-div[class*="menu_"],
-div[class*="popout_"] {
-  background: linear-gradient(160deg, #1f1252 0%, #131a55 100%) !important;
-  border: 1px solid var(--vh-border) !important;
-  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 0 30px -10px rgba(139, 92, 246, 0.5) !important;
-}
-
-div[class*="menu_"] div[class*="item_"][class*="focused"],
-div[class*="menu_"] div[class*="item_"]:hover {
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.45), rgba(59, 130, 246, 0.35)) !important;
-}
-
-/* Tooltips */
-[class*="tooltip_"] {
-  background: linear-gradient(135deg, #2d1459, #1b2a7a) !important;
-  border: 1px solid var(--vh-border);
-}
-
-[class*="tooltipPointer_"]::after {
-  border-top-color: #2d1459 !important;
-}
-
-/* ---------- Schalter, Slider, Checkboxen ---------- */
-[class*="checked_"][class*="container_"] [class*="control_"],
-[class*="checked_"] {
-  background-color: #6366f1 !important;
-}
-
-[class*="bar_"] [class*="barFill_"],
-[class*="grabber_"] {
-  background: var(--vh-gradient-accent) !important;
-}
-
-/* ---------- Auswahl & Links ---------- */
 ::selection {
   background: rgba(139, 92, 246, 0.55);
   color: #fff;
-}
-
-a,
-[class*="anchor_"] {
-  color: #7dd3fc;
-}
-
-a:hover {
-  color: #bae6fd;
-}
-
-/* ---------- Status-Punkte ---------- */
-rect[fill="#23a559"], rect[fill="#3ba55d"] { fill: #38bdf8; }
-
-/* ---------- Badge für Erwähnungen ---------- */
-[class*="numberBadge_"],
-[class*="lowerBadge_"] [class*="numberBadge"] {
-  background: var(--vh-gradient-accent) !important;
-  color: #fff !important;
-}
-
-/* ---------- Titel/Logo-Zeile oben (Desktop) ---------- */
-[class*="titleBar_"],
-[class*="bar_"][class*="typeWindows"] {
-  background: rgba(10, 8, 30, 0.7) !important;
 }
