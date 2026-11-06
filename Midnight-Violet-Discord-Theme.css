@@ -1,30 +1,23 @@
 /*
- * Midnight Violet — Discord / Vencord Theme
- * Version: 2.0.0
+ * MIDNIGHT VIOLET — Vencord FIXED
+ * Version 2.1.0
  *
- * A conservative, readability-first rewrite.
- * Install as a local Vencord theme CSS file.
- *
- * Notes:
- * - Uses Discord's theme variables for the main color system.
- * - Avoids broad selectors that previously recolored unrelated elements.
- * - Discord updates may rename internal classes; theme compatibility can vary.
+ * Forces a consistent dark violet palette even if Discord's base theme
+ * is set to Light. Designed to fix white panels and unreadable text.
  */
 
-/* --------------------------------------------------------------------------
-   1. COLOR TOKENS
-   -------------------------------------------------------------------------- */
-
+/* Apply the same palette regardless of Discord's selected base theme. */
 :root,
-.theme-dark {
+.theme-dark,
+.theme-light {
   color-scheme: dark;
 
   --mv-bg: #100b18;
   --mv-bg-deep: #0b0811;
   --mv-panel: #151020;
   --mv-panel-alt: #1b1428;
-  --mv-panel-hover: #241a34;
-  --mv-panel-active: #302044;
+  --mv-panel-hover: #261b38;
+  --mv-panel-active: #34234a;
 
   --mv-purple: #a970f5;
   --mv-purple-bright: #c49aff;
@@ -34,41 +27,41 @@
   --mv-text: #f4effb;
   --mv-text-muted: #c2b7d2;
   --mv-text-subtle: #988aa9;
-  --mv-border: rgba(196, 154, 255, 0.15);
-  --mv-border-strong: rgba(196, 154, 255, 0.28);
+  --mv-border: rgba(196, 154, 255, 0.17);
+  --mv-border-strong: rgba(196, 154, 255, 0.30);
 
-  /* Discord / Vencord semantic variables */
-  --background-primary: var(--mv-bg);
-  --background-secondary: var(--mv-panel);
-  --background-secondary-alt: var(--mv-panel-alt);
-  --background-tertiary: var(--mv-bg-deep);
-  --background-accent: var(--mv-panel-active);
+  /* Discord semantic background variables */
+  --background-primary: #100b18;
+  --background-secondary: #151020;
+  --background-secondary-alt: #1b1428;
+  --background-tertiary: #0b0811;
+  --background-accent: #34234a;
   --background-floating: #1b1428;
+  --background-mobile-primary: #100b18;
+  --background-mobile-secondary: #151020;
 
-  --background-modifier-hover: rgba(169, 112, 245, 0.10);
-  --background-modifier-active: rgba(169, 112, 245, 0.16);
-  --background-modifier-selected: rgba(169, 112, 245, 0.14);
-  --background-modifier-accent: var(--mv-border);
+  --background-modifier-hover: rgba(169, 112, 245, 0.12);
+  --background-modifier-active: rgba(169, 112, 245, 0.18);
+  --background-modifier-selected: rgba(169, 112, 245, 0.16);
+  --background-modifier-accent: rgba(196, 154, 255, 0.17);
 
-  --text-normal: var(--mv-text);
-  --text-muted: var(--mv-text-muted);
-  --text-link: var(--mv-purple-bright);
+  /* Discord semantic text variables */
+  --text-normal: #f4effb;
+  --text-muted: #c2b7d2;
+  --text-link: #c49aff;
   --header-primary: #fffaff;
-  --header-secondary: var(--mv-text-muted);
+  --header-secondary: #c2b7d2;
 
   --interactive-normal: #c7bbd8;
   --interactive-hover: #f0e7fb;
   --interactive-active: #ffffff;
-  --interactive-muted: #776b87;
+  --interactive-muted: #8c809c;
 
-  --brand-experiment: var(--mv-purple);
+  /* Brand and controls */
+  --brand-experiment: #a970f5;
   --brand-experiment-560: #9658df;
   --brand-experiment-600: #8145cf;
   --brand-experiment-100: #f4eaff;
-
-  --mention-background: rgba(169, 112, 245, 0.16);
-  --mention-foreground: var(--mv-purple-bright);
-
   --input-background: #1b1428;
   --input-placeholder-text: #988aa9;
 
@@ -76,261 +69,196 @@
   --scrollbar-thin-track: transparent;
   --scrollbar-auto-thumb: #60417f;
   --scrollbar-auto-track: transparent;
-  --scrollbar-auto-scrollbar-color-thumb: #60417f;
-  --scrollbar-auto-scrollbar-color-track: transparent;
-
-  --mv-radius: 10px;
 }
 
-/* --------------------------------------------------------------------------
-   2. PAGE BACKGROUNDS
-   -------------------------------------------------------------------------- */
-
+/* Root application surfaces */
+html,
 body,
 #app-mount {
-  background: var(--mv-bg-deep);
-  color: var(--mv-text);
+  color-scheme: dark !important;
+  background: #0b0811 !important;
+  color: #f4effb !important;
 }
 
-/* Keep Discord's own layout backgrounds intact; only tint known surfaces. */
-[class*="app_"],
-[class*="base_"] {
-  color: var(--mv-text);
+/* Discord layout */
+#app-mount [class*="app_"],
+#app-mount [class*="base_"],
+#app-mount [class*="bg_"],
+#app-mount [class*="layers_"],
+#app-mount [class*="layer_"] {
+  background-color: #100b18;
+  color: #f4effb;
 }
 
-/* Server rail and channel sidebar */
-[class*="guilds_"] {
-  background: var(--mv-bg-deep) !important;
-  border-right: 1px solid var(--mv-border);
+/* Server rail */
+#app-mount [class*="guilds_"] {
+  background: #0b0811 !important;
+  border-right: 1px solid rgba(196, 154, 255, 0.17);
 }
 
-[class*="sidebar_"] {
-  background: var(--mv-panel) !important;
-  border-right: 1px solid var(--mv-border);
+/* Channel sidebar and user panel */
+#app-mount [class*="sidebar_"],
+#app-mount [class*="privateChannels_"],
+#app-mount [class*="panels_"] {
+  background: #151020 !important;
 }
 
-/* Main chat and member list */
-[class*="chat_"],
-[class*="chatContent_"],
-[class*="membersWrap_"],
-[class*="members_"] {
-  background: var(--mv-bg) !important;
+/* Main chat, Friends page, DMs and activity panels */
+#app-mount [class*="chat_"],
+#app-mount [class*="chatContent_"],
+#app-mount [class*="container_"][class*="people"],
+#app-mount [class*="nowPlayingColumn_"],
+#app-mount [class*="applicationStore_"],
+#app-mount [class*="shop_"] {
+  background: #100b18 !important;
+  color: #f4effb !important;
 }
 
-[class*="container_"][class*="themed_"] {
-  background: var(--mv-panel) !important;
+/* Headers and navigation bars */
+#app-mount [class*="title_"],
+#app-mount [class*="header_"],
+#app-mount [class*="container_"][class*="themed_"] {
+  background: #151020 !important;
+  color: #f4effb !important;
+  border-color: rgba(196, 154, 255, 0.17) !important;
 }
 
-/* --------------------------------------------------------------------------
-   3. TEXT AND ICON CONTRAST
-   -------------------------------------------------------------------------- */
-
-[class*="title_"],
-[class*="name_"],
-[class*="username_"],
-[class*="header_"] {
-  color: var(--mv-text);
+/* Friends page tabs and section headers */
+#app-mount [class*="tabBar_"],
+#app-mount [class*="peopleList_"],
+#app-mount [class*="section_"] {
+  color: #f4effb;
 }
 
-[class*="subtitle_"],
-[class*="topic_"],
-[class*="timestamp_"],
-[class*="placeholder_"] {
-  color: var(--mv-text-muted);
+#app-mount [class*="peopleListItem_"],
+#app-mount [class*="listItem_"][class*="people"] {
+  background: transparent !important;
+  color: #f4effb !important;
 }
 
-/* Do not globally recolor SVGs: Discord uses icon colors to indicate state. */
-a,
-[class*="anchor_"] {
-  color: var(--mv-purple-bright);
+#app-mount [class*="peopleListItem_"]:hover {
+  background: rgba(169, 112, 245, 0.10) !important;
 }
 
-a:hover,
-[class*="anchor_"]:hover {
-  color: var(--mv-pink);
+/* Right-side Active Now panel */
+#app-mount [class*="nowPlayingColumn_"] [class*="itemCard_"],
+#app-mount [class*="nowPlayingColumn_"] [class*="outer_"],
+#app-mount [class*="nowPlayingColumn_"] [class*="body_"] {
+  background: #1b1428 !important;
+  color: #f4effb !important;
+  border-color: rgba(196, 154, 255, 0.17) !important;
 }
 
-/* --------------------------------------------------------------------------
-   4. CHANNELS AND SERVER LIST
-   -------------------------------------------------------------------------- */
-
-[class*="containerDefault_"] [class*="icon_"],
-[class*="containerDefault_"] [class*="name_"] {
-  color: var(--mv-text-muted);
+/* Text: target content text, not every SVG or icon */
+#app-mount [class*="name_"],
+#app-mount [class*="title_"],
+#app-mount [class*="username_"],
+#app-mount [class*="header_"],
+#app-mount [class*="content_"],
+#app-mount [class*="messageContent_"],
+#app-mount [class*="text_"] {
+  color: #f4effb;
 }
 
-[class*="modeSelected_"] {
-  background: rgba(169, 112, 245, 0.16) !important;
-  border-radius: 8px;
+#app-mount [class*="subtext_"],
+#app-mount [class*="subtitle_"],
+#app-mount [class*="timestamp_"],
+#app-mount [class*="description_"] {
+  color: #c2b7d2;
 }
 
-[class*="modeSelected_"] [class*="name_"],
-[class*="modeSelected_"] [class*="icon_"] {
-  color: var(--mv-purple-bright) !important;
-}
-
-[class*="containerDefault_"]:hover [class*="name_"],
-[class*="containerDefault_"]:hover [class*="icon_"] {
-  color: var(--mv-text) !important;
-}
-
-[class*="guilds_"] [class*="pill_"] [class*="item_"] {
-  background: var(--mv-purple-bright) !important;
-}
-
-/* --------------------------------------------------------------------------
-   5. CHAT MESSAGES
-   -------------------------------------------------------------------------- */
-
-[class*="message_"] {
-  border-radius: 8px;
-}
-
-[class*="message_"]:hover {
-  background: rgba(169, 112, 245, 0.045) !important;
-}
-
-[class*="mentioned_"] {
-  background: rgba(229, 138, 203, 0.10) !important;
-  border-left: 3px solid var(--mv-pink);
-}
-
-[class*="replying_"] {
-  background: rgba(169, 112, 245, 0.08) !important;
-}
-
-[class*="messageContent_"] {
-  color: var(--mv-text);
-}
-
-/* Mentions remain readable in messages and member lists. */
-[class*="mention_"] {
-  color: var(--mv-purple-bright) !important;
+/* Channel selection */
+#app-mount [class*="modeSelected_"] {
   background: rgba(169, 112, 245, 0.17) !important;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* --------------------------------------------------------------------------
-   6. MESSAGE COMPOSER
-   -------------------------------------------------------------------------- */
+#app-mount [class*="modeSelected_"] [class*="name_"],
+#app-mount [class*="modeSelected_"] [class*="icon_"] {
+  color: #c49aff !important;
+}
 
-[class*="channelTextArea_"],
-[class*="scrollableContainer_"] {
-  background: var(--mv-panel-alt) !important;
-  border: 1px solid var(--mv-border);
+/* Messages */
+#app-mount [class*="message_"] {
+  border-radius: 8px;
+}
+
+#app-mount [class*="message_"]:hover {
+  background: rgba(169, 112, 245, 0.055) !important;
+}
+
+#app-mount [class*="mentioned_"] {
+  background: rgba(229, 138, 203, 0.11) !important;
+  border-left: 3px solid #e58acb;
+}
+
+/* Message input */
+#app-mount [class*="channelTextArea_"],
+#app-mount [class*="scrollableContainer_"],
+#app-mount [class*="searchBar_"] {
+  background: #1b1428 !important;
+  color: #f4effb !important;
+  border: 1px solid rgba(196, 154, 255, 0.20);
+  border-radius: 10px !important;
+}
+
+#app-mount [class*="channelTextArea_"]:focus-within,
+#app-mount [class*="searchBar_"]:focus-within {
+  border-color: #a970f5 !important;
+}
+
+/* Popouts and menus */
+#app-mount [class*="menu_"],
+#app-mount [class*="popout_"],
+#app-mount [class*="modal_"],
+#app-mount [class*="messagesPopoutWrap_"] {
+  background: #1b1428 !important;
+  color: #f4effb !important;
+  border: 1px solid rgba(196, 154, 255, 0.20);
   border-radius: 12px !important;
 }
 
-[class*="channelTextArea_"]:focus-within,
-[class*="scrollableContainer_"]:focus-within {
-  border-color: var(--mv-purple) !important;
-  box-shadow: 0 0 0 2px rgba(169, 112, 245, 0.12);
+#app-mount [class*="menu_"] [class*="item_"]:hover,
+#app-mount [class*="menu_"] [class*="focused_"] {
+  background: rgba(169, 112, 245, 0.17) !important;
+  color: #ffffff !important;
 }
 
-/* --------------------------------------------------------------------------
-   7. BUTTONS — preserve semantic colors for danger/success states
-   -------------------------------------------------------------------------- */
-
-[class*="lookFilled_"][class*="colorBrand_"] {
-  background: var(--mv-purple-deep) !important;
+/* Buttons */
+#app-mount [class*="lookFilled_"][class*="colorBrand_"] {
+  background: #8145cf !important;
   color: #ffffff !important;
   border-radius: 8px !important;
 }
 
-[class*="lookFilled_"][class*="colorBrand_"]:hover {
+#app-mount [class*="lookFilled_"][class*="colorBrand_"]:hover {
   background: #9658df !important;
 }
 
-[class*="lookOutlined_"][class*="colorBrand_"] {
-  border-color: var(--mv-border-strong) !important;
-  color: var(--mv-purple-bright) !important;
-  border-radius: 8px !important;
+/* Links and mentions */
+#app-mount a,
+#app-mount [class*="anchor_"] {
+  color: #c49aff;
 }
 
-/* --------------------------------------------------------------------------
-   8. POPOUTS, MENUS AND MODALS
-   -------------------------------------------------------------------------- */
-
-[class*="menu_"],
-[class*="popout_"],
-[class*="messagesPopoutWrap_"],
-[class*=" modal_"],
-[class*="modal_"] {
-  background: #1b1428 !important;
-  border: 1px solid var(--mv-border);
-  border-radius: 12px !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+#app-mount [class*="mention_"] {
+  background: rgba(169, 112, 245, 0.18) !important;
+  color: #d7baff !important;
 }
 
-[class*="menu_"] [class*="item_"]:hover,
-[class*="menu_"] [class*="focused_"] {
-  background: rgba(169, 112, 245, 0.16) !important;
-  color: var(--mv-text) !important;
-  border-radius: 6px;
-}
-
-/* --------------------------------------------------------------------------
-   9. SEARCH, INPUTS AND SETTINGS
-   -------------------------------------------------------------------------- */
-
-input,
-textarea,
-[class*="input_"],
-[class*="searchBar_"] {
-  color: var(--mv-text);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--mv-text-subtle);
-}
-
-[class*="searchBar_"] {
-  background: var(--mv-panel-alt) !important;
-  border: 1px solid var(--mv-border);
-  border-radius: 9px !important;
-}
-
-[class*="searchBar_"]:focus-within {
-  border-color: var(--mv-purple) !important;
-}
-
-/* Settings navigation and selected tabs */
-[class*="side_"] [class*="item_"][class*="selected_"],
-[class*="tabBar_"] [class*="item_"][class*="selected_"] {
-  color: var(--mv-purple-bright) !important;
-  background: rgba(169, 112, 245, 0.12);
-  border-radius: 7px;
-}
-
-/* --------------------------------------------------------------------------
-   10. REACTIONS, UNREAD MARKERS AND DIVIDERS
-   -------------------------------------------------------------------------- */
-
-[class*="reaction_"] {
-  background: rgba(169, 112, 245, 0.08) !important;
-  border: 1px solid var(--mv-border);
+/* Reactions */
+#app-mount [class*="reaction_"] {
+  background: rgba(169, 112, 245, 0.09) !important;
+  border: 1px solid rgba(196, 154, 255, 0.17);
   border-radius: 7px !important;
 }
 
-[class*="reaction_"][class*="reactionMe_"] {
-  background: rgba(169, 112, 245, 0.20) !important;
-  border-color: var(--mv-purple) !important;
+#app-mount [class*="reaction_"][class*="reactionMe_"] {
+  background: rgba(169, 112, 245, 0.22) !important;
+  border-color: #a970f5 !important;
 }
 
-[class*="divider_"] {
-  border-color: var(--mv-border) !important;
-}
-
-[class*="unreadPill_"] {
-  background: var(--mv-purple-deep) !important;
-  color: #ffffff !important;
-}
-
-/* --------------------------------------------------------------------------
-   11. SCROLLBARS
-   -------------------------------------------------------------------------- */
-
+/* Scrollbars */
 * {
   scrollbar-color: #60417f transparent;
   scrollbar-width: thin;
@@ -357,17 +285,13 @@ textarea::placeholder {
   background-clip: padding-box;
 }
 
-/* --------------------------------------------------------------------------
-   12. SUBTLE INTERACTIONS
-   -------------------------------------------------------------------------- */
-
-[class*="containerDefault_"],
-[class*="reaction_"],
-[class*="lookFilled_"][class*="colorBrand_"] {
+/* Keep interaction subtle and accessible */
+#app-mount button,
+#app-mount [class*="clickable_"],
+#app-mount [class*="interactive_"] {
   transition: background-color 140ms ease, border-color 140ms ease;
 }
 
-/* Respect accessibility preferences. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -375,6 +299,5 @@ textarea::placeholder {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
   }
 }
