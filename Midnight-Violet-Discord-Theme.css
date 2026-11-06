@@ -97,39 +97,13 @@
 
 /* ---------- Hintergrund mit Farbverlauf ---------- */
 body,
-#app-mount,
-.appMount_a4b3d8,
-.bg__960e4 {
-  background: var(--vh-gradient-bg) !important;
-  background-attachment: fixed !important;
-}
-
-/* Langsam wandernder Glow */
-#app-mount::before {
-  content: "";
-  position: fixed;
-  inset: -20%;
-  z-index: 0;
-  pointer-events: none;
+#app-mount {
   background:
     radial-gradient(40% 40% at 20% 25%, rgba(139, 92, 246, 0.28), transparent 70%),
     radial-gradient(45% 45% at 80% 75%, rgba(59, 130, 246, 0.26), transparent 70%),
-    radial-gradient(35% 35% at 60% 15%, rgba(99, 102, 241, 0.18), transparent 70%);
-  animation: vh-drift 30s ease-in-out infinite alternate;
-}
-
-@keyframes vh-drift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(3%, -2%, 0) scale(1.05); }
-  100% { transform: translate3d(-3%, 3%, 0) scale(1.1); }
-}
-
-/* Haupt-Layout über den Glow legen */
-#app-mount > div,
-[class*="app_"],
-[class*="layer_"] {
-  position: relative;
-  z-index: 1;
+    radial-gradient(35% 35% at 60% 15%, rgba(99, 102, 241, 0.18), transparent 70%),
+    var(--vh-gradient-bg) !important;
+  background-attachment: fixed !important;
 }
 
 /* ---------- Server-Leiste, Kanalliste, Mitgliederliste ---------- */
@@ -150,12 +124,6 @@ nav[class*="guilds_"],
 }
 
 /* Titelleiste / Chat-Header */
-[class*="title_"][class*="container"],
-section[class*="title_"],
-[class*="chat_"] > [class*="content_"] > [class*="chatContent_"] {
-  background: transparent !important;
-}
-
 section[class*="title_"] {
   border-bottom: 1px solid var(--vh-border) !important;
   box-shadow: 0 1px 0 rgba(99, 102, 241, 0.15), 0 8px 24px -12px rgba(139, 92, 246, 0.35) !important;
@@ -180,8 +148,7 @@ section[class*="panels_"] > div,
 }
 
 /* Aktiv-Pille neben dem Server */
-[class*="item_"][class*="pill"] span,
-span[class*="item_"] {
+[class*="listItem_"] [class*="pill_"] span {
   background: var(--vh-gradient-accent) !important;
 }
 
@@ -263,18 +230,15 @@ button[class*="lookFilled_"][class*="colorBrand_"] {
 }
 
 /* ---------- Popouts, Menüs, Modals ---------- */
-[class*="menu_"],
-[class*="popout_"],
-[class*="layerContainer_"] [class*="container_"][class*="theme"],
-[class*="modal_"],
-[class*="root_"][class*="small"] {
+div[class*="menu_"],
+div[class*="popout_"] {
   background: linear-gradient(160deg, #1f1252 0%, #131a55 100%) !important;
   border: 1px solid var(--vh-border) !important;
   box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 0 30px -10px rgba(139, 92, 246, 0.5) !important;
 }
 
-[class*="item_"][class*="focused"],
-[class*="item_"]:hover {
+div[class*="menu_"] div[class*="item_"][class*="focused"],
+div[class*="menu_"] div[class*="item_"]:hover {
   background: linear-gradient(90deg, rgba(139, 92, 246, 0.45), rgba(59, 130, 246, 0.35)) !important;
 }
 
